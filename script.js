@@ -1,41 +1,50 @@
-// Compteur de clics
-let count = 0;
-const countElement = document.getElementById('count');
-const incrementBtn = document.getElementById('incrementBtn');
-const resetBtn = document.getElementById('resetBtn');
+const textElement = document.getElementById('text');
+const body = document.body;
 
-// Fonction pour incrémenter le compteur
-incrementBtn.addEventListener('click', () => {
-    count++;
-    countElement.textContent = count;
-    
-    // Animation
-    countElement.style.transform = 'scale(1.2)';
-    setTimeout(() => {
-        countElement.style.transform = 'scale(1)';
-    }, 200);
-});
-
-// Fonction pour réinitialiser le compteur
-resetBtn.addEventListener('click', () => {
-    count = 0;
-    countElement.textContent = count;
-});
-
-// Message du jour
 const messages = [
-    "Passez une excellente journée! 🌟",
-    "N'oubliez pas de sourire aujourd'hui! 😊",
-    "Vous êtes capable de grandes choses! 💪",
-    "Continuez à apprendre et à grandir! 📚",
-    "La créativité n'a pas de limites! 🎨"
+    "Bonne nuit",
+    "Fais de beaux rêves",
+    "Dors bien",
+    "À demain",
+    "Repose-toi bien"
 ];
 
-const messageElement = document.getElementById('message');
-const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-messageElement.textContent = randomMessage;
+const backgrounds = [
+    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
+];
 
-// Animation de transition douce
-countElement.style.transition = 'transform 0.2s ease';
+const animations = [
+    'pulse 1s ease-in-out',
+    'rotate 1s ease-in-out',
+    'fadeIn 1s ease-in-out'
+];
 
-console.log('Script chargé avec succès! ✅');
+let currentIndex = 0;
+
+function changeText() {
+    // Effet de sortie
+    textElement.style.opacity = '0';
+    textElement.style.transform = 'scale(0.5)';
+    
+    setTimeout(() => {
+        // Changer le texte et le fond
+        currentIndex = (currentIndex + 1) % messages.length;
+        textElement.textContent = messages[currentIndex];
+        body.style.background = backgrounds[currentIndex % backgrounds.length];
+        
+        // Changer l'animation
+        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+        textElement.style.animation = randomAnimation;
+        
+        // Effet d'entrée
+        textElement.style.opacity = '1';
+        textElement.style.transform = 'scale(1)';
+    }, 500);
+}
+
+// Changer le texte toutes les 3 secondes
+setInterval(changeText, 3000);
